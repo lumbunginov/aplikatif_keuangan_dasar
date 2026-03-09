@@ -1,0 +1,96 @@
+Kamu sedang develop Aplikatif Base Admin Template berdasarkan PRD.md yang ada di root project ini.
+
+Stack: Laravel 12 + TailAdmin (Tailwind v4 + Alpine.js) + MySQL
+
+Database sudah dibuat: aplikatif_base (MySQL, host: 127.0.0.1, user: root, password: kosong)
+
+TUGAS KAMU (kerjakan semua, jangan skip):
+
+1. SETUP .env
+   - Copy .env.example ke .env
+   - Set: APP_NAME="Aplikatif", DB_DATABASE=aplikatif_base, DB_USERNAME=root, DB_PASSWORD=(kosong)
+   - Set APP_KEY dengan php artisan key:generate
+
+2. INSTALL DEPENDENCIES
+   - composer install
+   - npm install
+
+3. INSTALL PACKAGES TAMBAHAN
+   - composer require spatie/laravel-permission
+   - composer require spatie/laravel-activitylog
+   - composer require intervention/image
+
+4. BUAT MIGRATIONS
+   Buat migration untuk:
+   a) Tambah kolom ke users table: status (enum active/inactive, default active), photo (varchar nullable)
+   b) settings table: id, key (varchar unique), value (text nullable), timestamps
+   c) Publish migration spatie permission: php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+   d) Publish migration spatie activitylog: php artisan vendor:publish --provider="Spatie\Activitylog\ActivitylogServiceProvider" --tag="activitylog-migrations"
+
+5. BUAT MODELS
+   a) User.php - tambah HasRoles (spatie), LogsActivity (spatie), fillable lengkap, casts password
+   b) Setting.php - model untuk tabel settings, dengan static helper get(key, default) dan set(key, value)
+
+6. BUAT SEEDERS
+   a) RolePermissionSeeder - buat roles: superadmin, admin, staff + permissions sesuai PRD
+   b) AdminSeeder - buat user: admin@aplikatif.com / password, role: superadmin
+   c) SettingsSeeder - isi settings default: app_name, primary_color, timezone, session_lifetime
+   d) Update DatabaseSeeder untuk jalankan semua seeder
+
+7. RUN MIGRATIONS & SEEDERS
+   php artisan migrate --seed
+
+8. BUAT AUTH SYSTEM (Blade + Laravel Auth)
+   a) Controllers: Auth/LoginController, Auth/ForgotPasswordController, Auth/ResetPasswordController
+   b) Routes di routes/auth.php: GET/POST /login, POST /logout, GET/POST /forgot-password, GET/POST /reset-password/{token}
+   c) Views: resources/views/auth/login.blade.php, forgot-password.blade.php, reset-password.blade.php
+      - Gunakan layout fullscreen TailAdmin yang sudah ada
+      - Styling konsisten dengan TailAdmin (Tailwind v4)
+      - Tambahkan rate limiting 5x login gagal
+   d) Middleware auth di semua route non-auth
+
+9. BUAT USER MANAGEMENT
+   a) UserController dengan CRUD lengkap (index, create, store, edit, update, destroy)
+   b) Routes: /users resource route
+   c) Views: users/index.blade.php (tabel + search + pagination), users/create.blade.php, users/edit.blade.php
+   d) Upload foto profil ke storage/app/public/photos, resize 200x200
+
+10. BUAT ROLE MANAGEMENT
+    a) RoleController (index, edit, update)
+    b) Routes: /roles
+    c) Views: roles/index.blade.php, roles/edit.blade.php (assign permissions ke role)
+
+11. BUAT SETTINGS PAGE
+    a) SettingController (index, update)
+    b) Route: /settings
+    c) View: settings/index.blade.php dengan form untuk app_name, primary_color, timezone, session_lifetime
+    d) Hanya superadmin yang bisa akses
+
+12. BUAT ACTIVITY LOG PAGE
+    a) Route: /activity-log
+    b) View: activity-log/index.blade.php (tabel dengan filter user, tanggal)
+    c) Pastikan login/logout/CRUD user tercatat di log
+
+13. UPDATE DASHBOARD
+    a) Tampilkan greeting "Selamat pagi/siang/sore, {nama}"
+    b) Stat cards: Total User, Total Admin, User Aktif
+    c) Recent activity: 10 log terakhir
+
+14. PWA SETUP
+    a) Buat public/manifest.json
+    b) Buat public/sw.js (service worker: cache first untuk assets, network first untuk pages)
+    c) Buat public/offline.html
+    d) Tambahkan meta tags PWA di layout app.blade.php
+    e) Register SW di app.blade.php
+    f) Buat placeholder icons di public/icons/ (minimal 192x192 dan 512x512 - bisa SVG placeholder dulu)
+
+15. UPDATE SIDEBAR
+    Tambahkan menu: Dashboard, Users, Roles, Settings, Activity Log (dengan permission check)
+
+16. FINAL
+    - php artisan storage:link
+    - npm run build
+    - Pastikan tidak ada error di php artisan route:list
+
+Setelah selesai semua, jalankan:
+openclaw system event --text "Done: Aplikatif Base Template selesai di G:\wamp64\www\aplikatif_v1 - Auth, CRUD User, Roles, Settings, ActivityLog, PWA sudah jalan" --mode now

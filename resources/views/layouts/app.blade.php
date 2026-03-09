@@ -6,13 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title ?? 'Dashboard' }} | TailAdmin - Laravel Tailwind CSS Admin Dashboard Template</title>
+    <title>{{ $title ?? 'Dashboard' }} | {{ setting('app_name', 'Aplikatif Base') }}</title>
+
+    <!-- PWA -->
+    @if(setting('pwa_enabled', '1') === '1')
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="{{ setting('pwa_theme_color', '#4F46E5') }}">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="{{ setting('app_name', 'Aplikatif') }}">
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+    @endif
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    <!-- Alpine.js -->
-    {{-- <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
 
     <!-- Theme Store -->
     <script>
@@ -129,6 +136,23 @@
             </div>
         </div>
 
+    </div>
+
+    @if(setting('pwa_enabled', '1') === '1')
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js');
+        }
+    </script>
+    @endif
+
+    <!-- Offline Banner -->
+    <div x-data="{ offline: !navigator.onLine }"
+        x-init="window.addEventListener('online', () => offline = false); window.addEventListener('offline', () => offline = true)"
+        x-show="offline" x-transition
+        class="fixed bottom-4 left-1/2 -translate-x-1/2 z-99999 rounded-lg bg-warning-500 px-4 py-2 text-sm font-medium text-white shadow-lg"
+        style="display: none;">
+        Tidak ada koneksi internet
     </div>
 
 </body>

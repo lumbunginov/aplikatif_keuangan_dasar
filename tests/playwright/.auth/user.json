@@ -1,0 +1,25 @@
+{
+  "cookies": [
+    {
+      "name": "XSRF-TOKEN",
+      "value": "eyJpdiI6IktrZW0xaUVvZkw0MDBnRXk5cXJtS1E9PSIsInZhbHVlIjoiaUJtLzIyMzB2ampuSFpoVW1KWGovNXB1ZU4xUlJlSWdKQ2wyc1RKN01waUx6SkYyY2NtV3A4dFVNMS85WmxqKyttNVllQTZBbVB0QzVvRUVPbHVYazRlajRWbnk1UXVwSm14TFVMRE9xMk9Xbjl0YzlFL01BaE42UXF1b3J1dk0iLCJtYWMiOiI2YjAzODAxMDcxZGZmMjRlZmJjY2ExMjJlNDI0OTQ3MjdhMDUzYTkyN2FlMThiOTcwNGU2NWM4NjllMTUwZDY3IiwidGFnIjoiIn0%3D",
+      "domain": "127.0.0.1",
+      "path": "/",
+      "expires": 1772876954.560268,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "aplikatif-base-session",
+      "value": "eyJpdiI6Ild5WDdaTUtodjhqTElrVWY0L3ZvTmc9PSIsInZhbHVlIjoiOXN2RGIyRzYxZWxnZXFwWjRPMFNLL29JcXIzZUtRdElMZUJhZW1tbDQ1Z1VmcXBaSXFwcDhtOW0rU0hMQUtxNjFZZm5haStmaXJFRXNlNGJOSGZEUUdjVlJGRGZ6TzhZUEpldndraFAxUlc3WXp6L1pDQVNad0lzU3pKKzF1bjAiLCJtYWMiOiJmMGM3MmRlMWUwZWI5Yzg4NmYzMGI4NDViNjExYTljNjVlODUwMDUzY2RhZWNjNzk3NmE3N2VhMDY2MjI3YjVlIiwidGFnIjoiIn0%3D",
+      "domain": "127.0.0.1",
+      "path": "/",
+      "expires": 1772876954.560391,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": []
+}

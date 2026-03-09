@@ -1,0 +1,154 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - link "Logo" [ref=e5] [cursor=pointer]:
+      - /url: /
+      - img "Logo" [ref=e6]
+    - generic [ref=e7]:
+      - navigation [ref=e8]:
+        - generic [ref=e10]:
+          - heading "Menu" [level=2] [ref=e11]:
+            - generic [ref=e12]: Menu
+          - list [ref=e13]:
+            - listitem [ref=e14]:
+              - link "Dashboard" [ref=e15] [cursor=pointer]:
+                - /url: /dashboard
+                - img [ref=e17]
+                - generic [ref=e19]: Dashboard
+            - listitem [ref=e20]:
+              - link "Users" [ref=e21] [cursor=pointer]:
+                - /url: /users
+                - img [ref=e23]
+                - generic [ref=e25]: Users
+            - listitem [ref=e26]:
+              - link "Roles" [ref=e27] [cursor=pointer]:
+                - /url: /roles
+                - img [ref=e29]
+                - generic [ref=e31]: Roles
+            - listitem [ref=e32]:
+              - link "Settings" [ref=e33] [cursor=pointer]:
+                - /url: /settings
+                - img [ref=e35]
+                - generic [ref=e37]: Settings
+            - listitem [ref=e38]:
+              - link "Activity Log" [ref=e39] [cursor=pointer]:
+                - /url: /activity-log
+                - img [ref=e41]
+                - generic [ref=e43]: Activity Log
+      - generic [ref=e45]:
+        - heading "Aplikatif Base" [level=3] [ref=e46]
+        - paragraph [ref=e47]: v1.0 — Admin Template
+  - generic [ref=e48]:
+    - banner [ref=e49]:
+      - generic [ref=e50]:
+        - generic [ref=e51]:
+          - button "Toggle Sidebar" [ref=e52] [cursor=pointer]:
+            - img [ref=e53]
+          - generic [ref=e57]:
+            - generic:
+              - img
+            - textbox "Search or type command..." [ref=e58]
+            - button "⌘ K" [ref=e59] [cursor=pointer]:
+              - generic [ref=e60]: ⌘
+              - generic [ref=e61]: K
+        - generic [ref=e62]:
+          - generic [ref=e63]:
+            - button [ref=e64] [cursor=pointer]:
+              - img [ref=e65]
+            - button [ref=e68] [cursor=pointer]:
+              - img [ref=e71]
+          - button "Administrator Administrator" [ref=e74] [cursor=pointer]:
+            - img "Administrator" [ref=e76]
+            - generic [ref=e77]: Administrator
+            - img [ref=e78]
+    - generic [ref=e80]:
+      - generic [ref=e81]:
+        - heading "Dashboard" [level=2] [ref=e82]
+        - navigation [ref=e83]:
+          - list [ref=e84]:
+            - listitem [ref=e85]:
+              - link "Home" [ref=e86] [cursor=pointer]:
+                - /url: http://127.0.0.1:8000
+                - text: Home
+                - img [ref=e87]
+            - listitem [ref=e89]: Dashboard
+      - generic [ref=e90]:
+        - heading "Selamat pagi, Administrator!" [level=2] [ref=e91]
+        - paragraph [ref=e92]: Berikut ringkasan aktivitas hari ini.
+      - generic [ref=e93]:
+        - generic [ref=e95]:
+          - generic [ref=e96]:
+            - paragraph [ref=e97]: Total Users
+            - heading "1" [level=3] [ref=e98]
+          - img [ref=e100]
+        - generic [ref=e103]:
+          - generic [ref=e104]:
+            - paragraph [ref=e105]: Active Users
+            - heading "1" [level=3] [ref=e106]
+          - img [ref=e108]
+        - generic [ref=e111]:
+          - generic [ref=e112]:
+            - paragraph [ref=e113]: Total Roles
+            - heading "3" [level=3] [ref=e114]
+          - img [ref=e116]
+        - generic [ref=e119]:
+          - generic [ref=e120]:
+            - paragraph [ref=e121]: Total Activities
+            - heading "17" [level=3] [ref=e122]
+          - img [ref=e124]
+      - generic [ref=e127]:
+        - heading "Aktivitas Terbaru" [level=3] [ref=e129]
+        - generic [ref=e131]:
+          - generic [ref=e132]:
+            - img [ref=e134]
+            - generic [ref=e136]:
+              - paragraph [ref=e137]: Administrator — User login
+              - paragraph [ref=e138]: 10 detik yang lalu
+          - generic [ref=e139]:
+            - img [ref=e141]
+            - generic [ref=e143]:
+              - paragraph [ref=e144]: Administrator — User login
+              - paragraph [ref=e145]: 56 detik yang lalu
+          - generic [ref=e146]:
+            - img [ref=e148]
+            - generic [ref=e150]:
+              - paragraph [ref=e151]: Administrator — User logout
+              - paragraph [ref=e152]: 56 detik yang lalu
+          - generic [ref=e153]:
+            - img [ref=e155]
+            - generic [ref=e157]:
+              - paragraph [ref=e158]: System — Failed login attempt
+              - paragraph [ref=e159]: 1 menit yang lalu
+          - generic [ref=e160]:
+            - img [ref=e162]
+            - generic [ref=e164]:
+              - paragraph [ref=e165]: Administrator — User login
+              - paragraph [ref=e166]: 1 menit yang lalu
+          - generic [ref=e167]:
+            - img [ref=e169]
+            - generic [ref=e171]:
+              - paragraph [ref=e172]: Administrator — User login
+              - paragraph [ref=e173]: 1 menit yang lalu
+          - generic [ref=e174]:
+            - img [ref=e176]
+            - generic [ref=e178]:
+              - paragraph [ref=e179]: Administrator — User login
+              - paragraph [ref=e180]: 1 menit yang lalu
+          - generic [ref=e181]:
+            - img [ref=e183]
+            - generic [ref=e185]:
+              - paragraph [ref=e186]: Administrator — User login
+              - paragraph [ref=e187]: 1 menit yang lalu
+          - generic [ref=e188]:
+            - img [ref=e190]
+            - generic [ref=e192]:
+              - paragraph [ref=e193]: Administrator — User login
+              - paragraph [ref=e194]: 1 menit yang lalu
+          - generic [ref=e195]:
+            - img [ref=e197]
+            - generic [ref=e199]:
+              - paragraph [ref=e200]: System — Failed login attempt
+              - paragraph [ref=e201]: 2 menit yang lalu
+```
