@@ -16,6 +16,30 @@ class MenuHelper
             'path' => '/dashboard',
         ];
 
+        $items[] = [
+            'icon' => 'transactions',
+            'name' => 'Transaksi',
+            'path' => '/transactions',
+        ];
+
+        $items[] = [
+            'icon' => 'wallet',
+            'name' => 'Dompet',
+            'path' => '/wallets',
+        ];
+
+        $items[] = [
+            'icon' => 'category',
+            'name' => 'Kategori',
+            'path' => '/categories',
+        ];
+
+        $items[] = [
+            'icon' => 'report',
+            'name' => 'Laporan',
+            'path' => '/reports',
+        ];
+
         if (self::can('view users')) {
             $items[] = [
                 'icon' => 'user-profile',
@@ -83,6 +107,14 @@ class MenuHelper
             'settings' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.5182 3.5L10.4858 3.5C10.0804 3.5 9.75182 3.82862 9.75182 4.23399C9.75182 5.9539 7.88982 7.02836 6.40065 6.16858C6.04943 5.96581 5.60034 6.08617 5.39764 6.43725L3.88165 9.06303C3.67901 9.41401 3.79926 9.86282 4.15025 10.0655C5.63946 10.9253 5.63949 13.0748 4.15026 13.9346C3.79928 14.1372 3.67903 14.586 3.88167 14.937L5.39767 17.5628C5.60037 17.9139 6.04945 18.0342 6.40067 17.8314C7.88983 16.9717 9.75182 18.0461 9.75182 19.766C9.75182 20.1714 10.0804 20.5 10.4858 20.5H13.5182C13.9233 20.5 14.2518 20.1715 14.2518 19.7663C14.2518 18.0471 16.1129 16.9721 17.602 17.8318C17.9528 18.0344 18.4013 17.9142 18.6039 17.5634L20.1203 14.9369C20.3229 14.5859 20.2026 14.1372 19.8517 13.9345C18.3625 13.0747 18.3625 10.9253 19.8517 10.0655C20.2027 9.86286 20.3229 9.41407 20.1203 9.0631L18.6039 6.43667C18.4014 6.08586 17.9528 5.96567 17.602 6.1682C16.1129 7.02795 14.2518 5.9529 14.2518 4.23377C14.2518 3.82851 13.9233 3.5 13.5182 3.5ZM12.0009 9.66493C10.7113 9.66493 9.6659 10.7103 9.6659 11.9999C9.6659 13.2895 10.7113 14.3349 12.0009 14.3349C13.2905 14.3349 14.3359 13.2895 14.3359 11.9999C14.3359 10.7103 13.2905 9.66493 12.0009 9.66493Z" fill="currentColor"/></svg>',
 
             'tables' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.25 5.5C3.25 4.25736 4.25736 3.25 5.5 3.25H18.5C19.7426 3.25 20.75 4.25736 20.75 5.5V18.5C20.75 19.7426 19.7426 20.75 18.5 20.75H5.5C4.25736 20.75 3.25 19.7426 3.25 18.5V5.5ZM5.5 4.75C5.08579 4.75 4.75 5.08579 4.75 5.5V8.58325L19.25 8.58325V5.5C19.25 5.08579 18.9142 4.75 18.5 4.75H5.5ZM19.25 10.0833H15.416V13.9165H19.25V10.0833ZM13.916 10.0833L10.083 10.0833V13.9165L13.916 13.9165V10.0833ZM8.58301 10.0833H4.75V13.9165H8.58301V10.0833ZM4.75 18.5V15.4165H8.58301V19.25H5.5C5.08579 19.25 4.75 18.9142 4.75 18.5ZM10.083 19.25V15.4165L13.916 15.4165V19.25H10.083ZM15.416 19.25V15.4165H19.25V18.5C19.25 18.9142 18.9142 19.25 18.5 19.25H15.416Z" fill="currentColor"></path></svg>',
+
+            'transactions' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 9h18M3 15h18M9 3v18M15 3v18M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+
+            'wallet' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 7H3a2 2 0 00-2 2v9a2 2 0 002 2h18a2 2 0 002-2V9a2 2 0 00-2-2zM16 14a1 1 0 100-2 1 1 0 000 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 7V5a2 2 0 012-2h12a2 2 0 012 2v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+
+            'category' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 7h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+
+            'report' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 20V10M12 20V4M6 20v-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
         ];
 
         return $icons[$iconName] ?? '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>';

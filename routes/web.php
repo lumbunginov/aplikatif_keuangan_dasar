@@ -9,6 +9,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\WalletController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\FinanceReportController;
 
 // Guest routes
 Route::middleware('guest')->group(function () {
@@ -64,6 +68,12 @@ Route::middleware('auth')->group(function () {
     Route::middleware('can:view activity-log')->group(function () {
         Route::get('/activity-log', [ActivityLogController::class, 'index'])->name('activity-log.index');
     });
+
+    // Finance
+    Route::resource('wallets', WalletController::class)->except(['show']);
+    Route::resource('categories', CategoryController::class)->except(['show']);
+    Route::resource('transactions', TransactionController::class)->except(['show']);
+    Route::get('reports', [FinanceReportController::class, 'index'])->name('reports.index');
 });
 
 // PWA manifest (dynamic)
