@@ -71,25 +71,27 @@
 
         @if(env('DEMO'))
         <div class="mx-auto mt-6 w-full max-w-md">
-            <div class="rounded-lg border border-warning-200 bg-warning-50 p-4 dark:border-warning-500/20 dark:bg-warning-500/10">
-                <p class="mb-3 text-center text-xs font-medium text-warning-700 dark:text-warning-400">
-                    Mode Demo — Klik untuk login cepat
-                </p>
-                <button type="button"
-                    onclick="document.querySelector('[name=email]').value='admin@aplikatif.com'; document.querySelector('[name=password]').value='password'; document.getElementById('login-form').submit();"
-                    class="flex w-full items-center justify-between rounded-lg border border-warning-200 bg-white px-4 py-2.5 text-sm transition hover:bg-warning-50 dark:border-warning-500/20 dark:bg-white/5 dark:hover:bg-warning-500/10">
-                    <div class="flex items-center gap-2">
-                        <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-700 dark:bg-brand-500/20 dark:text-brand-300">SA</span>
-                        <div class="text-left">
-                            <p class="font-medium text-gray-800 dark:text-white/90">Superadmin</p>
-                            <p class="text-xs text-gray-400">admin@aplikatif.com</p>
-                        </div>
-                    </div>
-                    <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                </button>
+            <div class="relative mb-4 flex items-center">
+                <div class="h-px flex-1 bg-gray-200 dark:bg-gray-700"></div>
+                <span class="mx-3 text-xs text-gray-400 dark:text-gray-500">Akses Demo</span>
+                <div class="h-px flex-1 bg-gray-200 dark:bg-gray-700"></div>
             </div>
+            <button type="button"
+                onclick="document.querySelector('[name=email]').value='admin@aplikatif.com'; document.querySelector('[name=password]').value='password'; document.getElementById('login-form').submit();"
+                class="shadow-theme-xs flex w-full items-center gap-3 rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm transition hover:border-brand-300 hover:bg-brand-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:border-brand-700 dark:hover:bg-brand-500/10">
+                <span class="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-brand-100 dark:bg-brand-500/20">
+                    <svg class="h-4 w-4 text-brand-600 dark:text-brand-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                </span>
+                <div class="flex-1 text-left">
+                    <p class="font-medium text-gray-800 dark:text-white/90">Superadmin</p>
+                    <p class="text-xs text-gray-400 dark:text-gray-500">admin@aplikatif.com</p>
+                </div>
+                <svg class="h-4 w-4 flex-shrink-0 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
         </div>
         @endif
     </div>
@@ -97,8 +99,13 @@
     <!-- Branding Side -->
     <div class="bg-brand-950 relative hidden h-screen w-1/2 items-center justify-center lg:flex dark:bg-white/5">
         <div class="flex max-w-xs flex-col items-center text-center">
-            <a href="/" class="mb-4 block">
-                <img src="/images/logo/auth-logo.svg" alt="Logo" />
+            <a href="/" class="mb-4 flex items-center justify-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20">
+                    <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <span class="text-2xl font-bold text-white">Keuanganku</span>
             </a>
             <p class="text-gray-400 dark:text-white/60">
                 {{ setting('app_name', 'Aplikatif Base') }} Admin Panel
