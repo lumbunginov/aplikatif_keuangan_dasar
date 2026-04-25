@@ -28,7 +28,7 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('login') }}" x-data="{ loading: false }" @submit="loading = true">
+            <form method="POST" action="{{ route('login') }}" id="login-form" x-data="{ loading: false }" @submit="loading = true">
                 @csrf
                 <div class="space-y-5">
                     <div>
@@ -68,6 +68,30 @@
                 </div>
             </form>
         </div>
+
+        @if(env('DEMO'))
+        <div class="mx-auto mt-6 w-full max-w-md">
+            <div class="rounded-lg border border-warning-200 bg-warning-50 p-4 dark:border-warning-500/20 dark:bg-warning-500/10">
+                <p class="mb-3 text-center text-xs font-medium text-warning-700 dark:text-warning-400">
+                    Mode Demo — Klik untuk login cepat
+                </p>
+                <button type="button"
+                    onclick="document.querySelector('[name=email]').value='admin@aplikatif.com'; document.querySelector('[name=password]').value='password'; document.getElementById('login-form').submit();"
+                    class="flex w-full items-center justify-between rounded-lg border border-warning-200 bg-white px-4 py-2.5 text-sm transition hover:bg-warning-50 dark:border-warning-500/20 dark:bg-white/5 dark:hover:bg-warning-500/10">
+                    <div class="flex items-center gap-2">
+                        <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-700 dark:bg-brand-500/20 dark:text-brand-300">SA</span>
+                        <div class="text-left">
+                            <p class="font-medium text-gray-800 dark:text-white/90">Superadmin</p>
+                            <p class="text-xs text-gray-400">admin@aplikatif.com</p>
+                        </div>
+                    </div>
+                    <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        @endif
     </div>
 
     <!-- Branding Side -->
