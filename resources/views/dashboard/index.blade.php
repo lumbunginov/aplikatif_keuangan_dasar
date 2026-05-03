@@ -74,17 +74,44 @@
                 <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">Transaksi Terbaru</h3>
                 <a href="{{ route('transactions.index') }}" class="text-sm text-brand-500 hover:text-brand-600">Lihat Semua</a>
             </div>
-            <div class="overflow-x-auto">
-                @if($recentTransactions->isEmpty())
-                    <div class="p-12 text-center">
-                        <svg class="mx-auto mb-3 w-12 h-12 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">Belum ada transaksi. Mulai catat keuangan Anda!</p>
-                        <a href="{{ route('transactions.create') }}" class="mt-3 inline-flex items-center gap-2 rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                            Tambah Transaksi
-                        </a>
-                    </div>
-                @else
+            @if($recentTransactions->isEmpty())
+                <div class="p-12 text-center">
+                    <svg class="mx-auto mb-3 w-12 h-12 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Belum ada transaksi. Mulai catat keuangan Anda!</p>
+                    <a href="{{ route('transactions.create') }}" class="mt-3 inline-flex items-center gap-2 rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600 transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        Tambah Transaksi
+                    </a>
+                </div>
+            @else
+                {{-- Mobile: card-list (< md) --}}
+                <div class="divide-y divide-gray-100 dark:divide-gray-800 md:hidden">
+                    @foreach($recentTransactions as $transaction)
+                        @php
+                            $isIncome = $transaction->type === 'income';
+                            $rowBg    = $isIncome ? 'bg-success-50 dark:bg-success-500/10' : 'bg-error-50 dark:bg-error-500/10';
+                            $border   = $isIncome ? 'border-l-4 border-success-500' : 'border-l-4 border-error-500';
+                            $amtColor = $isIncome ? 'text-success-600 dark:text-success-400' : 'text-error-600 dark:text-error-400';
+                            $prefix   = $isIncome ? '+' : '-';
+                        @endphp
+                        <div class="grid grid-cols-[1fr_auto] items-center gap-3 px-4 py-3 {{ $rowBg }} {{ $border }}">
+                            <div class="min-w-0">
+                                <p class="truncate text-sm font-semibold text-gray-800 dark:text-white/90">
+                                    {{ $transaction->description }}
+                                </p>
+                                <p class="truncate text-xs text-gray-400 dark:text-gray-500 mt-0.5">
+                                    {{ $transaction->transaction_date->format('d M Y') }}{{ $transaction->category ? ' · ' . $transaction->category->name : '' }}
+                                </p>
+                            </div>
+                            <div class="shrink-0 text-right text-sm font-bold {{ $amtColor }}">
+                                {{ $prefix }}{{ formatRupiah($transaction->amount) }}
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                {{-- Desktop: full table (≥ md) --}}
+                <div class="hidden md:block overflow-x-auto">
                     <table class="w-full">
                         <thead>
                             <tr class="border-b border-gray-200 dark:border-gray-800">
@@ -125,8 +152,8 @@
                             @endforeach
                         </tbody>
                     </table>
-                @endif
-            </div>
+                </div>
+            @endif
         </div>
     </div>
 @endsection
