@@ -32,31 +32,45 @@
         </div>
 
         <!-- Filters -->
-        <div class="border-b border-gray-200 p-5 dark:border-gray-800">
-            <form method="GET" class="flex flex-col gap-3 sm:flex-row sm:items-center">
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama atau email..."
-                    class="h-10 rounded-lg border border-gray-300 bg-transparent px-4 text-sm text-gray-800 focus:border-brand-300 focus:ring-brand-500/10 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 sm:w-64" />
-                <select name="status" class="h-10 rounded-lg border border-gray-300 bg-transparent px-3 text-sm text-gray-800 focus:border-brand-300 focus:ring-brand-500/10 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
-                    <option value="">Semua Status</option>
-                    <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Active</option>
-                    <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Inactive</option>
-                </select>
-                <select name="role" class="h-10 rounded-lg border border-gray-300 bg-transparent px-3 text-sm text-gray-800 focus:border-brand-300 focus:ring-brand-500/10 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
-                    <option value="">Semua Role</option>
-                    @foreach($roles as $role)
-                        <option value="{{ $role->name }}" {{ request('role') === $role->name ? 'selected' : '' }}>{{ ucfirst($role->name) }}</option>
-                    @endforeach
-                </select>
-                <select name="per_page" class="h-10 rounded-lg border border-gray-300 bg-transparent px-3 text-sm text-gray-800 focus:border-brand-300 focus:ring-brand-500/10 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
-                    @foreach([10, 25, 50] as $pp)
-                        <option value="{{ $pp }}" {{ request('per_page', 10) == $pp ? 'selected' : '' }}>{{ $pp }} / halaman</option>
-                    @endforeach
-                </select>
-                <button type="submit" class="h-10 rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">Filter</button>
-                @if(request()->hasAny(['search', 'status', 'role']))
-                    <a href="{{ route('users.index') }}" class="h-10 inline-flex items-center rounded-lg px-3 text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400">Reset</a>
-                @endif
-            </form>
+        @php $userFilters = collect(['search','status','role'])->filter(fn($k) => request($k))->count(); @endphp
+        <div x-data="{ open: {{ $userFilters > 0 ? 'true' : 'false' }} }" class="border-b border-gray-200 dark:border-gray-800">
+            <button type="button" @click="open = !open"
+                class="flex w-full items-center justify-between px-5 py-3 transition hover:bg-gray-50 dark:hover:bg-white/[0.02]">
+                <span class="flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+                    Filter
+                    @if($userFilters > 0)
+                        <span class="flex h-4 w-4 items-center justify-center rounded-full bg-brand-500 text-xs font-bold text-white leading-none">{{ $userFilters }}</span>
+                    @endif
+                </span>
+                <svg class="w-4 h-4 text-gray-400 transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div x-show="open" x-transition class="px-5 pb-5">
+                <form method="GET" class="flex flex-col gap-3 sm:flex-row sm:items-center sm:flex-wrap">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama atau email..."
+                        class="h-10 rounded-lg border border-gray-300 bg-transparent px-4 text-sm text-gray-800 focus:border-brand-300 focus:ring-brand-500/10 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 sm:w-64" />
+                    <select name="status" class="h-10 rounded-lg border border-gray-300 bg-transparent px-3 text-sm text-gray-800 focus:border-brand-300 focus:ring-brand-500/10 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
+                        <option value="">Semua Status</option>
+                        <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Active</option>
+                        <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Inactive</option>
+                    </select>
+                    <select name="role" class="h-10 rounded-lg border border-gray-300 bg-transparent px-3 text-sm text-gray-800 focus:border-brand-300 focus:ring-brand-500/10 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
+                        <option value="">Semua Role</option>
+                        @foreach($roles as $role)
+                            <option value="{{ $role->name }}" {{ request('role') === $role->name ? 'selected' : '' }}>{{ ucfirst($role->name) }}</option>
+                        @endforeach
+                    </select>
+                    <select name="per_page" class="h-10 rounded-lg border border-gray-300 bg-transparent px-3 text-sm text-gray-800 focus:border-brand-300 focus:ring-brand-500/10 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90">
+                        @foreach([10, 25, 50] as $pp)
+                            <option value="{{ $pp }}" {{ request('per_page', 10) == $pp ? 'selected' : '' }}>{{ $pp }} / halaman</option>
+                        @endforeach
+                    </select>
+                    <button type="submit" class="h-10 rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">Terapkan</button>
+                    @if(request()->hasAny(['search', 'status', 'role']))
+                        <a href="{{ route('users.index') }}" class="h-10 inline-flex items-center rounded-lg px-3 text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400">Reset</a>
+                    @endif
+                </form>
+            </div>
         </div>
 
         {{-- Mobile: card-list (< md) --}}
@@ -180,7 +194,7 @@
         <div class="border-t border-gray-200 px-5 py-4 dark:border-gray-800">
             <div class="flex items-center justify-between">
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                    Menampilkan {{ $users->firstItem() }}-{{ $users->lastItem() }} dari {{ $users->total() }} hasil
+                    {{ $users->firstItem() }}–{{ $users->lastItem() }} dari {{ $users->total() }}
                 </p>
                 {{ $users->links('vendor.pagination.tailwind') }}
             </div>

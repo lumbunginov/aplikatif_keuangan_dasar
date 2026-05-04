@@ -5,19 +5,33 @@
 
     <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
         <!-- Filters -->
-        <div class="border-b border-gray-200 p-5 dark:border-gray-800">
-            <form method="GET" class="flex flex-col gap-3 sm:flex-row sm:items-center">
-                <input type="text" name="event" value="{{ request('event') }}" placeholder="Cari aktivitas..."
-                    class="h-10 rounded-lg border border-gray-300 bg-transparent px-4 text-sm text-gray-800 focus:border-brand-300 focus:ring-brand-500/10 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 sm:w-56" />
-                <input type="date" name="date_from" value="{{ request('date_from') }}"
-                    class="h-10 rounded-lg border border-gray-300 bg-transparent px-4 text-sm text-gray-800 focus:border-brand-300 focus:ring-brand-500/10 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90" />
-                <input type="date" name="date_to" value="{{ request('date_to') }}"
-                    class="h-10 rounded-lg border border-gray-300 bg-transparent px-4 text-sm text-gray-800 focus:border-brand-300 focus:ring-brand-500/10 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90" />
-                <button type="submit" class="h-10 rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">Filter</button>
-                @if(request()->hasAny(['event', 'date_from', 'date_to', 'causer']))
-                    <a href="{{ route('activity-log.index') }}" class="h-10 inline-flex items-center px-3 text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400">Reset</a>
-                @endif
-            </form>
+        @php $logFilters = collect(['event','date_from','date_to','causer'])->filter(fn($k) => request($k))->count(); @endphp
+        <div x-data="{ open: {{ $logFilters > 0 ? 'true' : 'false' }} }" class="border-b border-gray-200 dark:border-gray-800">
+            <button type="button" @click="open = !open"
+                class="flex w-full items-center justify-between px-5 py-3 transition hover:bg-gray-50 dark:hover:bg-white/[0.02]">
+                <span class="flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+                    Filter
+                    @if($logFilters > 0)
+                        <span class="flex h-4 w-4 items-center justify-center rounded-full bg-brand-500 text-xs font-bold text-white leading-none">{{ $logFilters }}</span>
+                    @endif
+                </span>
+                <svg class="w-4 h-4 text-gray-400 transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div x-show="open" x-transition class="px-5 pb-5">
+                <form method="GET" class="flex flex-col gap-3 sm:flex-row sm:items-center sm:flex-wrap">
+                    <input type="text" name="event" value="{{ request('event') }}" placeholder="Cari aktivitas..."
+                        class="h-10 rounded-lg border border-gray-300 bg-transparent px-4 text-sm text-gray-800 focus:border-brand-300 focus:ring-brand-500/10 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 sm:w-56" />
+                    <input type="date" name="date_from" value="{{ request('date_from') }}"
+                        class="h-10 rounded-lg border border-gray-300 bg-transparent px-4 text-sm text-gray-800 focus:border-brand-300 focus:ring-brand-500/10 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90" />
+                    <input type="date" name="date_to" value="{{ request('date_to') }}"
+                        class="h-10 rounded-lg border border-gray-300 bg-transparent px-4 text-sm text-gray-800 focus:border-brand-300 focus:ring-brand-500/10 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90" />
+                    <button type="submit" class="h-10 rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">Terapkan</button>
+                    @if(request()->hasAny(['event', 'date_from', 'date_to', 'causer']))
+                        <a href="{{ route('activity-log.index') }}" class="h-10 inline-flex items-center px-3 text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400">Reset</a>
+                    @endif
+                </form>
+            </div>
         </div>
 
         {{-- Mobile: card-list (< md) --}}
@@ -116,7 +130,7 @@
         <div class="border-t border-gray-200 px-5 py-4 dark:border-gray-800">
             <div class="flex items-center justify-between">
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                    Menampilkan {{ $activities->firstItem() }}-{{ $activities->lastItem() }} dari {{ $activities->total() }} hasil
+                    {{ $activities->firstItem() }}–{{ $activities->lastItem() }} dari {{ $activities->total() }}
                 </p>
                 {{ $activities->links('vendor.pagination.tailwind') }}
             </div>
