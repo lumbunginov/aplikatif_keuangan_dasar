@@ -27,7 +27,49 @@
             </a>
         </div>
 
-        <div class="overflow-x-auto">
+        {{-- Mobile: card-list (< md) --}}
+        <div class="divide-y divide-gray-100 dark:divide-gray-800 md:hidden">
+            @forelse($categories as $category)
+                @php
+                    $isIncome  = $category->type === 'income';
+                    $rowBg     = $isIncome ? 'bg-success-50 dark:bg-success-500/10' : 'bg-error-50 dark:bg-error-500/10';
+                    $border    = $isIncome ? 'border-l-4 border-success-500' : 'border-l-4 border-error-500';
+                    $typeLabel = $isIncome ? 'Pemasukan' : 'Pengeluaran';
+                @endphp
+                <div class="grid grid-cols-[1fr_auto] items-center gap-3 px-4 py-3 {{ $rowBg }} {{ $border }}">
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-2">
+                            <span class="inline-block h-2.5 w-2.5 shrink-0 rounded-full" style="background-color: {{ $category->color }}"></span>
+                            <p class="truncate text-sm font-semibold text-gray-800 dark:text-white/90">{{ $category->name }}</p>
+                        </div>
+                        <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5 ml-[18px]">
+                            {{ $typeLabel }}{{ $category->is_default ? ' · Default' : '' }}
+                        </p>
+                    </div>
+                    <div class="shrink-0 flex items-center gap-1">
+                        @if(!$category->is_default)
+                            <a href="{{ route('categories.edit', $category) }}" class="rounded-lg p-1 text-gray-500 hover:bg-gray-200/60 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-700/60">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                            </a>
+                            <form method="POST" action="{{ route('categories.destroy', $category) }}" x-data
+                                @submit.prevent="if(confirm('Yakin ingin menghapus kategori ini?')) $el.submit()">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="rounded-lg p-1 text-gray-500 hover:bg-error-100/60 hover:text-error-600 dark:text-gray-400 dark:hover:bg-error-500/20">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                </button>
+                            </form>
+                        @endif
+                    </div>
+                </div>
+            @empty
+                <div class="px-5 py-12 text-center">
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Belum ada kategori.</p>
+                </div>
+            @endforelse
+        </div>
+
+        {{-- Desktop: full table (≥ md) --}}
+        <div class="hidden md:block overflow-x-auto">
             <table class="w-full">
                 <thead>
                     <tr class="border-b border-gray-200 dark:border-gray-800">

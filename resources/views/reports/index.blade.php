@@ -54,7 +54,39 @@
         <div class="border-b border-gray-200 px-6 py-4 dark:border-gray-800">
             <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">Rekap per Kategori</h3>
         </div>
-        <div class="overflow-x-auto">
+        @php $grandTotal = $totalIncome + $totalExpense; @endphp
+
+        {{-- Mobile: card-list (< md) --}}
+        <div class="divide-y divide-gray-100 dark:divide-gray-800 md:hidden">
+            @forelse($categoryData as $cat)
+                @php
+                    $isIncome   = $cat['type'] === 'income';
+                    $rowBg      = $isIncome ? 'bg-success-50 dark:bg-success-500/10' : 'bg-error-50 dark:bg-error-500/10';
+                    $border     = $isIncome ? 'border-l-4 border-success-500' : 'border-l-4 border-error-500';
+                    $totalColor = $isIncome ? 'text-success-600 dark:text-success-400' : 'text-error-600 dark:text-error-400';
+                    $pct        = $grandTotal > 0 ? number_format(($cat['total'] / $grandTotal) * 100, 1) : 0;
+                @endphp
+                <div class="grid grid-cols-[1fr_auto] items-center gap-3 px-4 py-3 {{ $rowBg }} {{ $border }}">
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-2">
+                            <span class="inline-block h-2.5 w-2.5 shrink-0 rounded-full" style="background-color: {{ $cat['color'] }}"></span>
+                            <p class="truncate text-sm font-semibold text-gray-800 dark:text-white/90">{{ $cat['name'] }}</p>
+                        </div>
+                        <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5 ml-[18px]">{{ $pct }}% dari total</p>
+                    </div>
+                    <div class="shrink-0 text-right">
+                        <p class="text-sm font-bold {{ $totalColor }}">{{ formatRupiah($cat['total']) }}</p>
+                    </div>
+                </div>
+            @empty
+                <div class="px-5 py-12 text-center">
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Tidak ada data transaksi untuk bulan ini.</p>
+                </div>
+            @endforelse
+        </div>
+
+        {{-- Desktop: full table (≥ md) --}}
+        <div class="hidden md:block overflow-x-auto">
             <table class="w-full">
                 <thead>
                     <tr class="border-b border-gray-200 dark:border-gray-800">
@@ -65,7 +97,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @php $grandTotal = $totalIncome + $totalExpense; @endphp
                     @forelse($categoryData as $cat)
                         <tr class="border-b border-gray-100 dark:border-gray-800">
                             <td class="px-5 py-4">

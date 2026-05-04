@@ -59,8 +59,54 @@
             </form>
         </div>
 
-        <!-- Table -->
-        <div class="overflow-x-auto">
+        {{-- Mobile: card-list (< md) --}}
+        <div class="divide-y divide-gray-100 dark:divide-gray-800 md:hidden">
+            @forelse($users as $user)
+                @php
+                    $isActive = $user->status === 'active';
+                    $rowBg    = $isActive ? 'bg-success-50 dark:bg-success-500/10' : 'bg-error-50 dark:bg-error-500/10';
+                    $border   = $isActive ? 'border-l-4 border-success-500' : 'border-l-4 border-error-500';
+                @endphp
+                <div class="flex items-center gap-3 px-4 py-3 {{ $rowBg }} {{ $border }}">
+                    <img src="{{ $user->photo_url }}" alt="{{ $user->name }}" class="h-9 w-9 shrink-0 rounded-full object-cover" />
+                    <div class="min-w-0 flex-1">
+                        <p class="truncate text-sm font-semibold text-gray-800 dark:text-white/90">{{ $user->name }}</p>
+                        <p class="truncate text-xs text-gray-400 dark:text-gray-500 mt-0.5">{{ $user->email }}</p>
+                    </div>
+                    <div class="shrink-0 flex flex-col items-end gap-1">
+                        @foreach($user->roles as $role)
+                            <span class="inline-flex rounded-full bg-brand-50 px-2 py-0.5 text-xs font-medium text-brand-700 dark:bg-brand-500/10 dark:text-brand-400">{{ ucfirst($role->name) }}</span>
+                        @endforeach
+                        <div class="flex gap-1">
+                            @can('edit users')
+                            <a href="{{ route('users.edit', $user) }}" class="rounded-lg p-1 text-gray-500 hover:bg-gray-200/60 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-700/60">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                            </a>
+                            @endcan
+                            @can('delete users')
+                            @if($user->id !== auth()->id())
+                            <form method="POST" action="{{ route('users.destroy', $user) }}" x-data
+                                @submit.prevent="if(confirm('Yakin ingin menghapus user ini?')) $el.submit()">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="rounded-lg p-1 text-gray-500 hover:bg-error-100/60 hover:text-error-600 dark:text-gray-400 dark:hover:bg-error-500/20">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                </button>
+                            </form>
+                            @endif
+                            @endcan
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="px-5 py-12 text-center">
+                    <svg class="mx-auto mb-3 w-12 h-12 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Tidak ada user ditemukan.</p>
+                </div>
+            @endforelse
+        </div>
+
+        {{-- Desktop: full table (≥ md) --}}
+        <div class="hidden md:block overflow-x-auto">
             <table class="w-full">
                 <thead>
                     <tr class="border-b border-gray-200 dark:border-gray-800">

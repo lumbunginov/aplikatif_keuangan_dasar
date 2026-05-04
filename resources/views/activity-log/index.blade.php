@@ -20,8 +20,45 @@
             </form>
         </div>
 
-        <!-- Table -->
-        <div class="overflow-x-auto">
+        {{-- Mobile: card-list (< md) --}}
+        <div class="divide-y divide-gray-100 dark:divide-gray-800 md:hidden">
+            @forelse($activities as $activity)
+                <div class="px-4 py-3" x-data="{ open: false }">
+                    <div class="grid grid-cols-[1fr_auto] items-start gap-3">
+                        <div class="min-w-0">
+                            <p class="truncate text-sm font-semibold text-gray-800 dark:text-white/90">{{ $activity->description }}</p>
+                            <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
+                                {{ $activity->created_at->format('d M Y H:i') }} · {{ $activity->causer?->name ?? 'System' }}
+                            </p>
+                            @if($activity->subject_type)
+                                <p class="text-xs text-gray-400 dark:text-gray-500">
+                                    {{ class_basename($activity->subject_type) }}{{ $activity->subject_id ? ' #' . $activity->subject_id : '' }}
+                                </p>
+                            @endif
+                        </div>
+                        @if($activity->properties->isNotEmpty())
+                            <div class="shrink-0">
+                                <button @click="open = !open" class="text-brand-500 hover:text-brand-600 text-xs whitespace-nowrap">
+                                    <span x-text="open ? 'Tutup' : 'Detail'"></span>
+                                </button>
+                            </div>
+                        @endif
+                    </div>
+                    @if($activity->properties->isNotEmpty())
+                        <div x-show="open" x-transition class="mt-2">
+                            <pre class="text-xs bg-gray-50 dark:bg-gray-800 p-2 rounded overflow-x-auto">{{ json_encode($activity->properties->toArray(), JSON_PRETTY_PRINT) }}</pre>
+                        </div>
+                    @endif
+                </div>
+            @empty
+                <div class="px-5 py-12 text-center">
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Belum ada aktivitas tercatat.</p>
+                </div>
+            @endforelse
+        </div>
+
+        {{-- Desktop: full table (≥ md) --}}
+        <div class="hidden md:block overflow-x-auto">
             <table class="w-full">
                 <thead>
                     <tr class="border-b border-gray-200 dark:border-gray-800">
